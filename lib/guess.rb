@@ -9,20 +9,15 @@ class Guess
   end
 
   def correct?
-    response_array = response.split(' ')
-    if response_array[0] == card.value && response_array[2] == card.suit
-      true
-    else
-      false
-    end
+    @response == "#{card.value} of #{card.suit}"
   end
 
   def feedback
-    response_array = response.split(' ')
-    if response_array[0] == card.value && response_array[2] == card.suit
+    if correct? 
       "Correct!"
     else
       "Incorrect."
     end
   end
+
 end

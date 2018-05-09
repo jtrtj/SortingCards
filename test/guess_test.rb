@@ -9,7 +9,7 @@ class GuessTest < MiniTest::Test
     card = Card.new("10", "Hearts")
     guess = Guess.new("10 of Hearts", card)
 
-    assert_equal card.inspect , guess.card.inspect
+    assert_equal card, guess.card
 
   end
 
