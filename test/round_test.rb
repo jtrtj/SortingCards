@@ -52,7 +52,7 @@ class DeckTest < MiniTest::Test
     assert_equal 1, round.guesses.count
   end
 
-  def test_can_check_first_feedback
+  def test_can_check_first_guess_feedback
     card_1 = Card.new("3","Hearts")
     card_2 = Card.new("4", "Clubs")
     deck = Deck.new([card_1, card_2])
@@ -63,7 +63,6 @@ class DeckTest < MiniTest::Test
   end
 
   def test_it_records_number_of_correct_guesses
-    # skip
     card_1 = Card.new("3","Hearts")
     card_2 = Card.new("4", "Clubs")
     deck = Deck.new([card_1, card_2])
@@ -71,10 +70,18 @@ class DeckTest < MiniTest::Test
     round.record_guess("3 of Hearts")
 
     assert_equal 1, round.number_correct
+
+    card_1 = Card.new("9","Spades")
+    card_2 = Card.new("3", "Hearts")
+    deck = Deck.new([card_1, card_2])
+    round = Round.new(deck)
+    round.record_guess("9 of Spades")
+    round.record_guess("3 of Hearts")
+
+    assert_equal 2, round.number_correct
   end
 
   def test_next_card_in_deck_becomes_current_card
-    # skip
     card_1 = Card.new("3","Hearts")
     card_2 = Card.new("4", "Clubs")
     deck = Deck.new([card_1, card_2])
@@ -82,6 +89,18 @@ class DeckTest < MiniTest::Test
     round.record_guess("3 of Hearts")
 
     assert_equal card_2, round.current_card
+
+    card_1 = Card.new("3","Hearts")
+    card_2 = Card.new("4", "Clubs")
+    card_3 = Card.new("5", "Diamonds")
+    card_4 = Card.new("Jack", "Hearts")
+    card_5 = Card.new("5", "Spades")
+    deck = Deck.new([card_1, card_2, card_3, card_4, card_5])
+    round.record_guess("3 of Hearts")
+    round.record_guess("Ace of Spades")
+    round.record_guess("5 of Diamonds")
+
+    assert_equal card_4, round.current_card
   end
 
   def test_it_adds_to_guesses
@@ -108,24 +127,23 @@ class DeckTest < MiniTest::Test
 
   def test_it_does_not_add_incorrect_guess_to_number_correct
     card_1 = Card.new("3","Hearts")
-    card_2 = Card.new("4", "Clubs")
+    card_2 = Card.new("Jack", "Clubs")
     deck = Deck.new([card_1, card_2])
     round = Round.new(deck)
     round.record_guess("3 of Hearts")
     round.record_guess("Jack of Diamonds")
 
     assert_equal 1, round.number_correct
-
   end
 
   def test_percent_correct
-    card_1 = Card.new("3","Hearts")
-    card_2 = Card.new("4", "Clubs")
+    card_1 = Card.new("10","Hearts")
+    card_2 = Card.new("Jack", "Clubs")
     deck = Deck.new([card_1, card_2])
     round = Round.new(deck)
-    round.record_guess("3 of Hearts")
+    round.record_guess("10 of Hearts")
     round.record_guess("Jack of Diamonds")
-binding.pry
+
     assert_equal 50, round.percent_correct
   end
 

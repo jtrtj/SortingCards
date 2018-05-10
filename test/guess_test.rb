@@ -4,16 +4,15 @@ require './lib/guess.rb'
 require 'pry'
 
 class GuessTest < MiniTest::Test
-  #this test needs work.
   def test_new_guess_has_card_attached_to_it
-    card = Card.new("10", "Hearts")
-    guess = Guess.new("10 of Hearts", card)
+    card = Card.new("Jack", "Hearts")
+    guess = Guess.new("Jack of Hearts", card)
 
     assert_equal card, guess.card
 
   end
 
-  def test_response
+  def test_response_is_the_guess
     card = Card.new("10", "Hearts")
     guess = Guess.new("10 of Hearts", card)
 
@@ -25,19 +24,19 @@ class GuessTest < MiniTest::Test
     refute_equal "2 of Diamonds", card
   end
 
-  def test_correct?
+  def test_if_guess_is_same_as_card
     card = Card.new("10", "Hearts")
     guess = Guess.new("10 of Hearts", card)
 
-    assert_equal true, guess.correct?
+    assert guess.correct?
 
     card = Card.new("Queen", "Clubs")
     guess = Guess.new("2 of Diamonds", card)
 
-    assert_equal false, guess.correct?
+    refute guess.correct?
   end
 
-  def test_feedback
+  def test_feedback_returns_correct_if_true_and_incorrect_if_false
     card = Card.new("10", "Hearts")
     guess = Guess.new("10 of Hearts", card)
 
