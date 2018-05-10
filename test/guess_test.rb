@@ -4,7 +4,6 @@ require './lib/guess.rb'
 require 'pry'
 
 class GuessTest < MiniTest::Test
-  #this test needs work.
   def test_new_guess_has_card_attached_to_it
     card = Card.new("10", "Hearts")
     guess = Guess.new("10 of Hearts", card)

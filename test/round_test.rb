@@ -125,7 +125,6 @@ class DeckTest < MiniTest::Test
     round = Round.new(deck)
     round.record_guess("3 of Hearts")
     round.record_guess("Jack of Diamonds")
-binding.pry
     assert_equal 50, round.percent_correct
   end
 
